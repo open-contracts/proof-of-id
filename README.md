@@ -12,6 +12,6 @@ Number 2) should be solvable by literally copying the source code of [Tornado Ca
 
 Two ways to solve 1):
   - a) Drop last 4 SSN digits in favor of less sensitive data (that still gives high likelihood that name+bday+data is unique)
-  - b) Included much more unique information, such that a preimage attack is infeasible
+  - b) Include much more unique information, such that a preimage attack is infeasible
  
  a) is probably easier than b), but still unsolved.
