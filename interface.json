@@ -1,6 +1,6 @@
 {
   "ropsten": {
-    "name": "Pay a Twitter Account",
+    "name": "Proof of Legacy Identity",
     "address": "0x6258B9Af809900b43E078d8a48101066328fc2DD",
     "abi": [
       {
