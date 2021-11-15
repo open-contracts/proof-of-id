@@ -1,43 +1,11 @@
 # Proof of Legacy Identity
 
-```
+Key issues: 
+ 1) last 4 ssn digits are revealed to anyone who knows your name + bday
+ 2) may want to prove uniqueness but 'start from scratch' in the beginning (without linking your new digital identity to your identityHash)
 
-def download_identity():
-  # get basic hard facts
-  ssn_html = interactive_session('https://ssn.gov')
-  name, bday, last4SsnDigits = extract(ssn_html)
-
-  # get Google data
-  google_data.zip = interactive_session('goo.gl/account')
- 
-  # get YT history
-  list[html] vid_descriptions = interactive_session('yt.com/history')
-
-  # get Spotify data
-  list[html] fav_artists = interactive_session('spotify.com/favorites')
-  pca(bert_embeddings())
-
-  # get FB data
-  list[html] chat_msgs = interactive_session('fb.com/chats')
-  
-  id_data =to_json(name, bday, ..., chatmsg)
-  signatures = sign_fields(id_data)
-  offer_json_download(id_data, signatures)
-  
-
-
-def create_user():
-   
-
-def prove_identity(address, id_data, signatures): 
-  
-  
-
-
-# Prove that embeddings + name, etc history is close to previous one
-# compare to enclave-signed web data stored on users devices / cloud
-# encrypted by password, massively duplicated
-# 
-
- 
-```
+Number 2) should be solvable by literally copying the source code of [Tornado Cash](https://github.com/tornadocash). Logic: 
+- user commits secretHash=hash(secret) while submitting identityHash
+- contract aggregates all secretHash's into a single merkle tree
+- a while later, user can create their new digital identity by producing a zero-knowledge proof that they know a secret that hashes to a value that's contained in the merkle tree, without revealing which one
+- creating only one identity this way is guaranteed with the same trick tordado cash uses to prevent double-spending: the [nullifier](https://docs.tornado.cash/how-does-tornado.cash-work)
