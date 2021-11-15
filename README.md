@@ -11,7 +11,7 @@ Number 2) should be solvable by literally copying the source code of [Tornado Ca
 - creating only one identity this way is guaranteed with the same trick tordado cash uses to prevent double-spending: the [nullifier](https://docs.tornado.cash/how-does-tornado.cash-work)
 
 Two ways to solve 1):
- a) Drop last 4 SSN digits in favor of something less sensitive (but unique enough to yield unique hashes - name+bday likely not enough)
- b) Included much more unique information, such that a preimage attach is infeasible
+  - a) Drop last 4 SSN digits in favor of less sensitive data (that still gives high likelihood that name+bday+data is unique)
+  - b) Included much more unique information, such that a preimage attach is infeasible
  
  a) is probably easier than b), but still unsolved.
