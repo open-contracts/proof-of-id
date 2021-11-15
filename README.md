@@ -1,4 +1,4 @@
-# Proof of Digital Identity
+# Proof of Legacy Identity
 
 ```
 
