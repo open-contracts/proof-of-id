@@ -15,6 +15,6 @@ with opencontracts.enclave_backend() as enclave:
     bday = bday.text.strip()[14:].strip()
     return name, bday, last4ssn
 
-  name, bday, last4ssn = enclave.interactive_session(url='https://venmo.com', parser=parser, instructions=instructions)
+  name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/', parser=parser, instructions=instructions)
   identityHash = enclave.keccak(name, bday, last4ssn, types=('string', 'string', 'string'))
   enclave.submit(identityHash, types=('bytes32',), function_name='createIdentity')
