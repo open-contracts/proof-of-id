@@ -18,7 +18,7 @@ contract ProofOfIdentity is OpenContractAlpha {
         return _account[ID];
     }
 
-    function createIdentity(bytes32 oracleHash, address msgSender, bytes32 ID) 
+    function createID(bytes32 oracleHash, address msgSender, bytes32 ID) 
     public _oracle(oracleHash, msgSender, this.createIdentity.selector) {
         _account[ID] = msgSender;
         _ID[msgSender] = ID;
