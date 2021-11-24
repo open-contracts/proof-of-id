@@ -16,5 +16,5 @@ with opencontracts.enclave_backend() as enclave:
     return name, bday, last4ssn
 
   name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/', parser=parser, instructions=instructions)
-  identityHash = enclave.keccak(name, bday, last4ssn, types=('string', 'string', 'string'))
-  enclave.submit(identityHash, types=('bytes32',), function_name='createIdentity')
+  ID = enclave.keccak(name, bday, last4ssn, types=('string', 'string', 'string'))
+  enclave.submit(ID, types=('bytes32',), function_name='createID')
