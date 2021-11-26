@@ -1,7 +1,7 @@
 # Proof of Legacy Identity
 
 The current implementation has a major privacy issue, which can be split into two aspects: 
- 1) identityHash reveals last 4 ssn digits to anyone who guesses your name + bday (brute-force preimage attack only requires computing 10.000 hashes)
+ 1) ID reveals last ssn digits to anyone who guesses your name + bday (brute-force preimage attack only requires computing 10.000 hashes)
  2) your unique digital identity is linked to your identityHash (e.g. allows anyone who knows your legacy identity to pin down your new digital identity)
 
 Number 2) should be solvable by literally copying the source code of [Tornado Cash](https://github.com/tornadocash). Logic: 
