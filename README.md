@@ -1,5 +1,9 @@
 # Proof of Legacy Identity
 
+
+
+
+
 The current implementation has a major privacy issue, which can be split into two aspects: 
  1) Your ID basically reveals your name, birthday and last SSN digit, because a [Preimage Attack](https://en.wikipedia.org/wiki/Preimage_attack) is definitely feasible. That's why we're not using all last 4 digits, even though it would make IDs more unique.
  2) Your ID _is_ the unique digital identity that gets linked to your Ethereum account (so anyone who knows your ID can find your transaction history). It would be much better if the former only has to be published when creating a one-time _voucher_, which can later be used up to create a unique identity for your Ethereum account, without revealing which voucher was used.
