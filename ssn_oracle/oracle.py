@@ -1,6 +1,6 @@
 import opencontracts
 from bs4 import BeautifulSoup
-import email, re
+import email, re, os
 
 with opencontracts.enclave_backend() as enclave:
 
@@ -14,8 +14,10 @@ with opencontracts.enclave_backend() as enclave:
     last4ssn = re.findall('[0-9]{4}', ssn.text.strip())[0]
     bday = bday.text.strip()[14:].strip()
     return name, bday, last4ssn
-
+  
+  enclave.print(f'Proof of Identity started running in enclave!')
   name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/', parser=parser, instructions=instructions)
-  # ID = enclave.keccak(name, bday, last4ssn, types=('string', 'string', 'string'))
-  ID = enclave.keccak(name, types=('string',))
+  dna_data = os.urandom(32) # e.g. get from https://23andme.com
+  ID = enclave.keccak(name, bday, last4ssn, dna_data, types=('string', 'string', 'string', 'bytes32'))  
+  enclave.print(f'Confirmed your ID: {ID}')
   enclave.submit(ID, types=('bytes32',), function_name='createID')
