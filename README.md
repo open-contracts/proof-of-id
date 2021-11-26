@@ -1,8 +1,8 @@
 # Proof of Legacy Identity
 
 The current implementation has a major privacy issue, which can be split into two aspects: 
- 1) Your ID basically reveals your name, birthday and last SSN digit, because a [Preimage Attack](https://en.wikipedia.org/wiki/Preimage_attack) is definitely feasible. That's why we're not using all last 4 digits, even though we could.
- 2) your unique ID _is_ your unique digital identity that gets linked to your Ethereum account (e.g. allows anyone who knows your ID to find your transaction history). 
+ 1) Your ID basically reveals your name, birthday and last SSN digit, because a [Preimage Attack](https://en.wikipedia.org/wiki/Preimage_attack) is definitely feasible. That's why we're not using all last 4 digits, even though it would make IDs more unique.
+ 2) Your ID _is_ the unique digital identity that gets linked to your Ethereum account (e.g. allows anyone who knows your ID to find your transaction history). It would be much better if the former only has to be published in the process of generating a unique identity, that can be linked to your account later without revealing which ID belongs to it.
 
 Number 2) should be solvable by literally copying the source code of [Tornado Cash](https://github.com/tornadocash). Logic: 
 - user commits secretHash=hash(secret) while submitting ID
