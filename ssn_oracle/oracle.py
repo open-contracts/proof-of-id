@@ -17,7 +17,7 @@ with opencontracts.enclave_backend() as enclave:
   
   enclave.print(f'Proof of Identity started running in enclave!')
   name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/', parser=parser, instructions=instructions)
-  dna_data = os.urandom(32) # e.g. get from https://23andme.com
-  ID = enclave.keccak(name, bday, last4ssn, dna_data, types=('string', 'string', 'string', 'bytes32'))  
+  need_more_unique_data_for_privacy = os.urandom(32) # e.g. get dna data from https://23andme.com?
+  ID = enclave.keccak(name, bday, last4ssn, need_more_unique_data_for_privacy, types=('string', 'string', 'string', 'bytes32'))  
   enclave.print(f'Confirmed your ID: {ID}')
   enclave.submit(ID, types=('bytes32',), function_name='createID')
