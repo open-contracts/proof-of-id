@@ -1,11 +1,15 @@
 pragma solidity ^0.8.0;
-
 import "https://github.com/open-contracts/protocol/blob/main/solidity_contracts/OpenContractRopsten.sol";
+
 
 contract ProofOfLegacyIdentity is OpenContract {
     
     mapping(bytes32 => address) private _account;
     mapping(address => bytes32) private _ID;
+
+    constructor() {
+        setOracle(this.createID.selector, "any");  // developer mode, allows any oracle for 'createID'
+    }
 
     function getID(address account) public view returns(bytes32) {
         require(_ID[account] != bytes32(0), "Account never created an ID.");
@@ -18,8 +22,8 @@ contract ProofOfLegacyIdentity is OpenContract {
         return _account[ID];
     }
 
-    function createID(bytes32 oracleHash, address msgSender, bytes32 ID) 
-    public _oracle(oracleHash, msgSender, this.createIdentity.selector) {
+    function createID(bytes32 oracleID, address msgSender, bytes32 ID) 
+    public checkOracle(oracleID, this.createID.selector) {
         _account[ID] = msgSender;
         _ID[msgSender] = ID;
     }
