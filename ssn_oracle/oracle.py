@@ -2,7 +2,7 @@ import opencontracts
 from bs4 import BeautifulSoup
 import email, re, os
 
-warning = f"""
+warning = """
 Warning: This is a prototype contract. It allows you to create a unique ID from 
 information that identifies you in the real world, and tie it to your Ethereum account.
 This is cool if you want to get loans without collateral, or take part in
