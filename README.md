@@ -12,7 +12,7 @@ Number 2) should be solvable by literally copying the source code of [TornadoCas
 - user submits a `secret` to the enclave, which submits `voucher=hash(secret)` along with the ID, and can only do so if ID wasn't submitted yet.
 - contract aggregates all vouchers into a single merkle tree
 - a while later, a user can create their actual unique digital identity by producing a zero-knowledge proof that they know a secret that hashes to a voucher contained in the merkle tree, without revealing which one.
-- creating only one identity this way can be guaranteed with the same trick TordadoCash uses to prevent double-spending: the [nullifier](https://docs.tornado.cash/how-does-tornado.cash-work) (don't ask me how that works)
+- creating only one identity this way can be guaranteed with the same trick TordadoCash uses to prevent double-spending: the [nullifier](https://docs.tornado.cash/how-does-tornado.cash-work) (todo: find out how that works)
 
 I see two possible ways to solve 1), not sure which is easier:
   - a) Drop last SSN digit in favor of less sensitive data (that still gives high likelihood that name+bday+data is unique)
