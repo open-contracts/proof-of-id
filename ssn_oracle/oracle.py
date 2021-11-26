@@ -17,6 +17,8 @@ They will then know this information about you, as well as your current Ethereum
 including all its past and future transactions. Are you *sure* you want to proceed?
 """
 
+instructions = "Login and visit your SSN account page."
+
 with opencontracts.enclave_backend() as enclave:
 
   def parser(mhtml):
@@ -31,7 +33,8 @@ with opencontracts.enclave_backend() as enclave:
     return name, bday, last4ssn
   
   enclave.print(f'Proof of Identity started running in enclave!')
-  name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/', parser=parser, instructions=instructions)
+  name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/',
+                                                     parser=parser, instructions=instructions)
   ID = enclave.keccak(name, bday, last4ssn[-1], types=('string', 'string', 'string'))
   enclave.print(f'Computed your ID: {ID}.')
 
