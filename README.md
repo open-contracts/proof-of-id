@@ -1,7 +1,7 @@
 # Proof of Legacy Identity
 
 The current implementation has a major privacy issue, which can be split into two aspects: 
- 1) ID basically reveals name, birthday and last ssn digit, because a preimage attack is definitely possible. That's why we're not using all last 4 digits, even though we could.
+ 1) Your ID basically reveals your name, birthday and last SSN digit, because a [Preimage Attack](https://en.wikipedia.org/wiki/Preimage_attack) is definitely feasible. That's why we're not using all last 4 digits, even though we could.
  2) your unique ID _is_ your unique digital identity that gets linked to your Ethereum account (e.g. allows anyone who knows your ID to find your transaction history). 
 
 Number 2) should be solvable by literally copying the source code of [Tornado Cash](https://github.com/tornadocash). Logic: 
