@@ -2,91 +2,74 @@
   "ropsten": {
     "name": "Proof of Legacy Identity",
     "address": "0x6258B9Af809900b43E078d8a48101066328fc2DD",
-    "abi": [
-      {
-        "inputs": [
-          {
-            "internalType": "string",
-            "name": "twitterHandle",
-            "type": "string"
-          }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes4",
-            "name": "",
-            "type": "bytes4"
-          }
-        ],
-        "name": "_allowedHash",
-        "outputs": [
-          {
-            "internalType": "bytes32",
-            "name": "",
-            "type": "bytes32"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "_complete_oracles",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "_completed",
-        "outputs": [
-          {
-            "internalType": "bool",
-            "name": "",
-            "type": "bool"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "oracleHash",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "address",
-            "name": "msgSender",
-            "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "twitterHandle",
-            "type": "string"
-          },
-          {
-            "internalType": "address",
-            "name": "tweetedAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "erc20address",
-            "type": "address"
-          }
-        ],
-        "name": "claim",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "oracleFolder": "ssn_oracle",
-        "type": "function"
-      }
-    ]
+    "abi":[
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "oracleID",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address",
+				"name": "msgSender",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "ID",
+				"type": "bytes32"
+			}
+		],
+		"name": "createID",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function",
+    "oracleFolder": "ssn_oracle"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "ID",
+				"type": "bytes32"
+			}
+		],
+		"name": "getAccount",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "getID",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
   }
 }
