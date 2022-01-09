@@ -10,11 +10,18 @@ one-human-one-vote democracy on the blockchain. But here's the bummer:
 
 Identifying yourself is pretty much at odds with privacy, for now.
 
-Your ID is currently computed from your name ({}), birthday ({}) and last SSN digit ({}).
+Your ID is currently computed from your name ({}), birthday ({}) and the fact
+that your last 4 SSN digits falls into one of 16 buckets - yours is number {}.
+
 By proceeding to create your ID on the blockchain, *it will become public*.
-Anyone who knows (or eventually guesses) these inputs can verify that they produce your ID.
-They will then know this information about you, as well as your current Ethereum account, 
-including all its past and future transactions. Are you *sure* you want to proceed?
+Anyone who knows (or eventually guesses) these inputs can verify that they 
+produce your ID and see that it belongs to your Ethereum account ({}).
+
+For example, someone who knows your name and birthday can quickly compute your bucket
+by trying out all 16 bucket numbers. Every bucket contains around 1000/16=625 possibilites 
+for your last 4 ssn digits, and they will learn that it is one (without knowing which) of those.
+
+Are you *sure* you want to proceed?
 """
 
 instructions = "Login and visit your SSN account page."
@@ -28,14 +35,16 @@ with opencontracts.enclave_backend() as enclave:
     name = parsed.find(attrs={'id': '3D"uef-container-tabs0"'}).a.text.strip()
     ssn_box = parsed.find(attrs={'id': '3D"mySSAOverviewSSN"'})
     ssn, _, bday, _ = ssn_box.findChild().findChild().findChildren()
-    last4ssn = re.findall('[0-9]{4}', ssn.text.strip())[0]
+    last4ssn = int(re.findall('[0-9]{4}', ssn.text.strip())[0])
     bday = bday.text.strip()[14:].strip()
     return name, bday, last4ssn
   
   enclave.print(f'Proof of Identity started running in enclave!')
   name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/',
                                                      parser=parser, instructions=instructions)
-  ID = enclave.keccak(name, bday, last4ssn[-1], types=('string', 'string', 'string'))
+  ssn4bits = enclave.keccak(last4ssn, types=('uint256',))[:4] # preimage attacks only reveal that last4ssn had one of 9999/2^4=624 values
+  ID = enclave.keccak(name, bday, ssn4bits, types=('string', 'string', 'bytes'))
+  
   enclave.print(f'Computed your ID: {ID}.')
 
   enclave.print(warning.format(name, bday, last4ssn[-1]))
