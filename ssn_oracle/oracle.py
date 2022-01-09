@@ -10,16 +10,16 @@ one-human-one-vote democracy on the blockchain. But here's the bummer:
 
 Identifying yourself is pretty much at odds with privacy, for now.
 
-Your ID is currently computed from your name ({}), birthday ({}) and the fact
-that your last 4 SSN digits falls into one of 16 buckets - yours is number {}.
+Your ID is currently computed from your name ({}), birthday ({}) and the "bucket-number" ({}),
+which indicates which bucket (among 32 buckets total) contains your last 4 SSN digits.
 
 By proceeding to create your ID on the blockchain, *it will become public*.
 Anyone who knows (or eventually guesses) these inputs can verify that they 
 produce your ID and see that it belongs to your Ethereum account ({}).
 
-For example, someone who knows your name and birthday can quickly compute your bucket
-by trying out all 16 bucket numbers. Every bucket contains around 1000/16=625 possibilites 
-for your last 4 ssn digits, and they will learn that it is one (without knowing which) of those.
+For example, someone who knows your name and birthday can quickly compute your bucket-number
+by trying out all 32 possible values. Every bucket contains around 1000/32≈312 possibilites 
+for your last 4 ssn digits, and they will learn that it is one of those, without knowing which.
 
 Are you *sure* you want to proceed?
 """
@@ -42,10 +42,11 @@ with opencontracts.enclave_backend() as enclave:
   enclave.print(f'Proof of Identity started running in enclave!')
   name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/',
                                                      parser=parser, instructions=instructions)
-  ssn4bits = enclave.keccak(last4ssn, types=('uint256',))[:4] # preimage attacks only reveal that last4ssn had one of 9999/2^4=624 values
-  ID = enclave.keccak(name, bday, ssn4bits, types=('string', 'string', 'bytes'))
+  # preimage attacks only reveal that last4ssn had one of 10^4/32≈312 values
+  bucket_number = int(enclave.keccak(last4ssn, types=('uint256',))[0]) % 32
+  ID = enclave.keccak(name, bday, bucket_number, types=('string', 'string', 'uint8'))
   
   enclave.print(f'Computed your ID: {ID}.')
 
-  enclave.print(warning.format(name, bday, last4ssn[-1]))
+  enclave.print(warning.format(name, bday, bucket_number))
   enclave.submit(ID, types=('bytes32',), function_name='createID')
