@@ -32,7 +32,7 @@ with opencontracts.enclave_backend() as enclave:
     mhtml = email.message_from_string(mhtml.replace("=\n", ""))
     url = mhtml['Snapshot-Content-Location']
     target_url = "https://secure.ssa.gov/mySSA/start"
-    assert url == target_url, "You clicked 'Submit' on '{url}', but should do so on '{target_url}'."
+    assert url == target_url, f"You clicked 'Submit' on '{url}', but should do so on '{target_url}'."
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
     parsed = BeautifulSoup(html.get_payload(decode=False))
     name = parsed.find(attrs={'id': '3D"uef-container-tabs0"'}).a.text.strip()
