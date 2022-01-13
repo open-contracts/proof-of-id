@@ -12,8 +12,7 @@ contract ProofOfID is OpenContract {
     }
 
     function getID(address account) public view returns(bytes32) {
-        require(_ID[account] != bytes32(0), "Account never created an ID.");
-        require(_account[_ID[account]] == account, "Account does not have an ID anymore.");
+        require(_ID[account] != bytes32(0), "Account doesn't have an ID.");
         return _ID[account];
     }
 
@@ -24,6 +23,7 @@ contract ProofOfID is OpenContract {
 
     function createID(bytes32 oracleID, address user, bytes32 ID) 
     public checkOracle(oracleID, this.createID.selector) {
+        _ID[_account[ID]] = bytes32(0);
         _account[ID] = user;
         _ID[user] = ID;
     }
