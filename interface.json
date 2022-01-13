@@ -3,73 +3,73 @@
     "name": "Proof of Legacy Identity",
     "address": "0x3a43DDEc7aDA59478442d287ea506B986f75e0D1",
     "abi": [
-      {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "oracleID",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "address",
-            "name": "msgSender",
-            "type": "address"
-          },
-          {
-            "internalType": "bytes32",
-            "name": "ID",
-            "type": "bytes32"
-          }
-        ],
-        "name": "createID",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function",
-        "oracleFolder": "ssn_oracle"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "ID",
-            "type": "bytes32"
-          }
-        ],
-        "name": "getAccount",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          }
-        ],
-        "name": "getID",
-        "outputs": [
-          {
-            "internalType": "bytes32",
-            "name": "",
-            "type": "bytes32"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      }
-    ]
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "oracleID",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "ID",
+				"type": "bytes32"
+			}
+		],
+		"name": "createID",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function",
+    "oracleFolder": "ssn_oracle"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "ID",
+				"type": "bytes32"
+			}
+		],
+		"name": "getAccount",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "getID",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
   }
 }
