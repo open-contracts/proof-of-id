@@ -30,6 +30,9 @@ with opencontracts.enclave_backend() as enclave:
 
   def parser(mhtml):
     mhtml = email.message_from_string(mhtml.replace("=\n", ""))
+    url = mhtml['Snapshot-Content-Location']
+    target_url = "https://secure.ssa.gov/mySSA/start"
+    assert url == target_url, "You clicked 'Submit' on '{url}', but should do so on '{target_url}'."
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
     parsed = BeautifulSoup(html.get_payload(decode=False))
     name = parsed.find(attrs={'id': '3D"uef-container-tabs0"'}).a.text.strip()
@@ -44,9 +47,10 @@ with opencontracts.enclave_backend() as enclave:
                                                      parser=parser, instructions=instructions)
   # preimage attacks only reveal that last4ssn had one of 10^4/32≈312 values
   bucket_number = int(enclave.keccak(last4ssn, types=('uint256',))[0]) % 32
+
   ID = enclave.keccak(name, bday, bucket_number, types=('string', 'string', 'uint8'))
   
-  enclave.print(f'Computed your ID: {ID}.')
+  enclave.print(f'Computed your ID: {'0x' + ID.hex()}, which may reveal your name, birthday and bucket number.')
 
   enclave.print(warning.format(name, bday, bucket_number))
   enclave.submit(ID, types=('bytes32',), function_name='createID')
