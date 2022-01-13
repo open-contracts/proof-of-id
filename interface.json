@@ -1,7 +1,7 @@
 {
   "ropsten": {
     "name": "Proof of Legacy Identity",
-    "address": "0x3a43DDEc7aDA59478442d287ea506B986f75e0D1",
+    "address": "0xD816921EC3bf96113cDd31B5736B6d9CEb338F4C",
     "abi": [
 	{
 		"inputs": [],
@@ -30,7 +30,7 @@
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function",
-    "oracleFolder": "ssn_oracle"
+		"oracleFolder": "ssn_oracle"
 	},
 	{
 		"inputs": [
