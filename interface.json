@@ -1,6 +1,6 @@
 {
   "ropsten": {
-    "name": "Proof of Legacy Identity",
+    "name": "Proof of ID",
     "address": "0xD816921EC3bf96113cDd31B5736B6d9CEb338F4C",
     "abi": [
 	{
