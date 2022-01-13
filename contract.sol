@@ -25,6 +25,6 @@ contract ProofOfID is OpenContract {
     function createID(bytes32 oracleID, address user, bytes32 ID) 
     public checkOracle(oracleID, this.createID.selector) {
         _account[ID] = user;
-        _ID[msgSender] = ID;
+        _ID[user] = ID;
     }
 }
