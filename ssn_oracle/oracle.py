@@ -50,7 +50,7 @@ with opencontracts.enclave_backend() as enclave:
 
   ID = enclave.keccak(name, bday, bucket_number, types=('string', 'string', 'uint8'))
   
-  enclave.print(f'Computed your ID: {'0x' + ID.hex()}, which may reveal your name, birthday and bucket number.')
+  enclave.print(f'Computed your ID: {"0x" + ID.hex()}, which may reveal your name, birthday and bucket number.')
 
   enclave.print(warning.format(name, bday, bucket_number))
   enclave.submit(ID, types=('bytes32',), function_name='createID')
