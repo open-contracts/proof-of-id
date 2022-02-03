@@ -46,7 +46,7 @@ with opencontracts.enclave_backend() as enclave:
   name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/',
                                                      parser=parser, instructions=instructions)
   # preimage attacks only reveal that last4ssn had one of 10^4/32≈312 values
-  bucket_number = int(enclave.keccak(last4ssn, types=('uint256',))[0]) % 32
+  bucket_number = int(enclave.keccak(last4ssn, types=('uint256',))[-1]) % 32 # last 5 bits of hash(last4ssn)
 
   ID = enclave.keccak(name, bday, bucket_number, types=('string', 'string', 'uint8'))
   
