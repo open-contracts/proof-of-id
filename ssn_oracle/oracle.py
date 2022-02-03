@@ -2,32 +2,9 @@ import opencontracts
 from bs4 import BeautifulSoup
 import email, re, os
 
-warning = """
-Warning: This is a prototype contract. It allows you to create a unique ID from 
-information that identifies you in the real world, and tie it to your Ethereum account.
-This is cool if you want to get loans without collateral, or take part in
-one-human-one-vote democracy on the blockchain. But here's the bummer: 
-
-Identifying yourself is pretty much at odds with privacy, for now.
-
-Your ID is currently computed from your name ({}), birthday ({}) and the "bucket-number" ({}),
-which indicates which bucket (among 32 buckets total) contains your last 4 SSN digits.
-
-By proceeding to create your ID on the blockchain, *it will become public*.
-Anyone who knows (or eventually guesses) these inputs can verify that they 
-produce your ID and see that it belongs to your Ethereum account ({}).
-
-For example, someone who knows your name and birthday can quickly compute your bucket-number
-by trying out all 32 possible values. Every bucket contains around 1000/32≈312 possibilites 
-for your last 4 ssn digits, and they will learn that it is one of those, without knowing which.
-
-Are you *sure* you want to proceed?
-"""
-
-instructions = "Login and visit your SSN account page."
-
 with opencontracts.enclave_backend() as enclave:
-
+  enclave.print(f'Proof of Identity started running in enclave!')
+  
   def parser(mhtml):
     mhtml = email.message_from_string(mhtml.replace("=\n", ""))
     url = mhtml['Snapshot-Content-Location']
@@ -42,15 +19,16 @@ with opencontracts.enclave_backend() as enclave:
     bday = bday.text.strip()[14:].strip()
     return name, bday, last4ssn
   
-  enclave.print(f'Proof of Identity started running in enclave!')
-  name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/',
-                                                     parser=parser, instructions=instructions)
-  # preimage attacks only reveal that last4ssn had one of 10^4/32≈312 values
-  bucket_number = int(enclave.keccak(last4ssn, types=('uint256',))[-1]) % 32 # last 5 bits of hash(last4ssn)
-
-  ID = enclave.keccak(name, bday, bucket_number, types=('string', 'string', 'uint8'))
+  name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/', parser=parser,
+                                                     instructions="Login and visit your SSN account page.")
   
-  enclave.print(f'Computed your ID: {"0x" + ID.hex()}, which may reveal your name, birthday and bucket number.')
-
-  enclave.print(warning.format(name, bday, bucket_number, enclave.user()))
+  # we divide all 10000 possible last4ssn into 2^5=32 random buckets, by using only the last 5 bits of hash(last4ssn)
+  ssn_bucket = int(enclave.keccak(last4ssn, types=('uint256',))[-1]) % 32
+  # the same ssn_bucket could have been computed from 10000/32≈312 different 4-digit combinations
+  # so last4ssn isn't revealed even if ssn_bucket can be reverse-engineered from ID
+  ID = enclave.keccak(name, bday, ssn_bucket, types=('string', 'string', 'uint8'))
+  
+  warning = f'Computed your ID: {"0x" + ID.hex()}, which may reveal your name ({name}), birthday ({bday})'
+  enclave.print(warning + f' and that your SSN is one of those in bucket no. {ssn_bucket} of 32.')
+  
   enclave.submit(enclave.user(), ID, types=('address', 'bytes32',), function_name='createID')
