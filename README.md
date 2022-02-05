@@ -1,13 +1,13 @@
 # Proof of ID
 
 ### Summary
-This contract allows you to create a unqiue identity on the blockchain. For now, this only works for individuals with a US social security number (SSN), but the idea can be generalized to any country and online identity database. The goal is to do this in a way that guarantees a person can only ever prove ownership of one ID in their life, such that they can accrue a credit history that incentivizes them to repay loans without collateral, or participate in one-human-one-vote governance decisions on the blockchain.
+This contract allows you to create a unqiue identity on the blockchain. For now, this only works for individuals with a US social security number (SSN), but the idea can be generalized to any country and online identity database. The goal is to do this in a way that guarantees a person can only ever create one digital identity, such that they can receive a loan without collateral by proving that they never defaulted on one before, or participate in one-human-one-vote governance decisions on the blockchain.
 
 The key difficulty is to compute your ID in a way that is unique to you throughout your life, while guaranteeing as much privacy as possible. These two features are at odds with each other, so we need to make trade-offs. 
 
-Currently, the ID is computed in a way that allows anyone to check if it was created by someone with a certain name and birthday (it's not exactly, but _pretty much_ the same as directly revealing those details along with every ID). If they do that, they will also learn something (but not everything!) about the last 4 digits of your SSN: while there were 1000 possibilities for those 4 digits before, they can now narrowed it down to around 300 possibilites. Right now, this information will be irreversably tied to the past and future transaction history of the Ethereum account that is used to create the ID. 
+Currently, the ID is computed in a way that allows anyone to check if it was created by someone with a certain name and birthday (it's not exactly, but _pretty much_ the same as directly revealing those details along with every ID). If they do that, they will also learn something (but not everything!) about the last 4 digits of your SSN: while there were 1000 possibilities for those 4 digits before, they can now narrow it down to around 300 possibilites. Right now, this information will be irreversably tied to the past and future transaction history of the Ethereum account that is used to create the ID. 
 
-As we describe below however, the contract could be improved to provide better privacy: while you must still reveal personal info to create a unique digital identity, you can keep secret  _which_ personal details belong to a given unique identity.
+As we describe below however, the contract could be improved to provide better privacy: while you must still reveal personal info to create a unique digital identity, you can keep secret  _which_ personal details belong to a given unique identity on Ethereum.
 
 ### The big picture
 
