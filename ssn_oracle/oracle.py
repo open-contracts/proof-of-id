@@ -28,14 +28,14 @@ with opencontracts.enclave_backend() as enclave:
   ID = enclave.keccak(name, bday, ssn_bucket, types=('string', 'string', 'uint8'))  
   
   # publishing your SSN reveals that last4ssn was one of the following possibilites:
-  my_bucket = int(eth_utils.keccak(encode_abi(types=("uint256",), args=(my_last_4_digits,)))[-1]) % 32
-  possible_values = list()
+  my_bucket = int(enclave.keccak(last4ssn, types=("uint256",))[-1]) % 32
+  possibilities = list()
   for possibility in range(10000):
-    bucket = int(eth_utils.keccak(encode_abi(types=("uint256",), args=(possibility,)))[-1]) % 32
-    if bucket == my_bucket: possible_values.append(str(possibility).zfill(4))
-  n = len(possible_values)
+    bucket = int(enclave.keccak(possibility, types=("uint256",))[-1]) % 32
+    if bucket == my_bucket: possibilities.append(str(possibility).zfill(4))
+  n = len(possibilities)
 
   warning = f'Computed your ID: {"0x" + ID.hex()}, which may reveal your name ({name}), birthday ({bday})'
-  enclave.print(warning + f' and that your last 4 SSN digits are one of the following {n} possibilites: {possible_values}')
+  enclave.print(warning + f' and that your last 4 SSN digits are one of the following {n} possibilites: {possibilities}')
   
   enclave.submit(enclave.user(), ID, types=('address', 'bytes32',), function_name='createID')
