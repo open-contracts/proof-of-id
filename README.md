@@ -28,7 +28,7 @@ To solve this, we define 32 `ssn_bucket`s, each containing around 300 of the 10.
 ```
 ssn_bucket = hash(last 4 SSN digits) mod 32
 ```
-where '[mod](https://en.wikipedia.org/wiki/Modulo_operation) 32' shortens the hash into a number between 0 and 31, which we call `ssn_bucket` and include in your ID. Since there are around 300 possibile last 4 SSN digits that fall into the same `ssn_bucket`, an attacker can only learn your name, birthday and bucket, but won't learn _that much_ about your SSN digits.
+where '[mod](https://en.wikipedia.org/wiki/Modulo_operation) 32' shortens the hash into a number between 0 and 31, which we call `ssn_bucket` and include in your ID. Since there are around 300 possibile last 4 SSN digits that fall into the same `ssn_bucket`, an attacker can only learn your name, birthday and bucket, but won't learn _that much_ about your SSN digits. But there's a way to improve privacy further, by keeping secret _which_ personal details belong to which Ethereum account.
 
 ### How to improve
 
