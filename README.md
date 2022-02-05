@@ -35,7 +35,6 @@ If you are a developer, here's how you could improve the contract to provide bet
 - 3] the user publishes the oracle proof containing their `personalID` and `voucher`, that some volunteer with an Ethereum account (who could be incentivzed via [OpenGSN](https://opengsn.org/)) will submit to the contract.
 - 4] if the oracle proof is valid and contains a new `personalID`, the contract appends `voucher` to a `voucherList`, and updates a state variable called `voucherUrn=hash(voucher, voucherUrn)`.
 - 5] after a few days, a user could submit the `voucherList` to an enclave along with their `accountID` and `secret`, which computes `voucher` and checks that it is in `voucherList`, then computes the most recent state of the `voucherUrn`, and gives the user an oracle proof for `voucherUrn` and `accountID` that they submit to the contract
-- 6] if the submitted `voucherUrn` has a value that the `voucherUrn` in the contract had before, it connects `accountID` to the user's account.
+- 6] if the submitted `voucherUrn` has a value that the `voucherUrn` in the contract had before, the user proves that their `accountID` is contained in a `voucher` that was put inside in the `voucherUrn`, without revealing which one. This proves their `accountID` corresponds to a unique `personalID`, without revealing which one.
 
-As long as the user keeps their `secret`, everyone knows that their `accountID` belongs to one unique `personalID` published before they claimed their `accountID`, without knowing which one.
 
