@@ -39,5 +39,5 @@ Sounds like magic, until you understand how it works:
 - 5] after a few days, a user could submit the `voucherList` to an enclave along with their `accountID` and `secret`, which computes `voucher` and checks that it is in `voucherList`, then computes the most recent state of the `voucherUrn`, and gives the user an oracle proof for `voucherUrn` and `accountID` that they submit to the contract
 - 6] if the submitted `voucherUrn` has a value that the `voucherUrn` in the contract had before, the user proves that their `accountID` is contained in a `voucher` that was put inside in the `voucherUrn`, without revealing which one. This proves their `accountID` corresponds to a unique `personalID`, without revealing which one.
 
-Optionally, the contract could incentivize 'privacy mining', by optionally allowing users in step 1] to become `privacy miners' by instructing the enclave to replace `personalID` and `voucher` with random numbers, which get submitted to the contract to somewhat obfuscate which `personalID`s may hide personal info.
+
 
