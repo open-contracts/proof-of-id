@@ -22,13 +22,20 @@ with opencontracts.enclave_backend() as enclave:
   name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/', parser=parser,
                                                      instructions="Login and visit your SSN account page.")
   
-  # we divide all 10000 possible last4ssn into 2^5=32 random buckets, by using only the last 5 bits of hash(last4ssn)
-  ssn_bucket = int(enclave.keccak(last4ssn, types=('uint256',))[-1]) % 32
-  # the same ssn_bucket could have been computed from 10000/32≈312 different 4-digit combinations
+  # we divide all 10000 possible last4ssn into 32 random buckets, by using only the last 5=log2(32) bits
+  my_bucket = int(enclave.keccak(last4ssn, types=('uint256',))[-1]) % 32
   # so last4ssn isn't revealed even if ssn_bucket can be reverse-engineered from ID
-  ID = enclave.keccak(name, bday, ssn_bucket, types=('string', 'string', 'uint8'))
+  ID = enclave.keccak(name, bday, ssn_bucket, types=('string', 'string', 'uint8'))  
   
+  # publishing your SSN reveals that last4ssn was one of the following possibilites:
+  my_bucket = int(eth_utils.keccak(encode_abi(types=("uint256",), args=(my_last_4_digits,)))[-1]) % 32
+  possible_values = list()
+  for possibility in range(10000):
+    bucket = int(eth_utils.keccak(encode_abi(types=("uint256",), args=(possibility,)))[-1]) % 32
+    if bucket == my_bucket: possible_values.append(str(possibility).zfill(4))
+  n = len(possible_values)
+
   warning = f'Computed your ID: {"0x" + ID.hex()}, which may reveal your name ({name}), birthday ({bday})'
-  enclave.print(warning + f' and that your SSN is one of those in bucket no. {ssn_bucket} of 32.')
+  enclave.print(warning + f' and that your last 4 SSN digits are one of the following {n} possibilites: {possible_values}')
   
   enclave.submit(enclave.user(), ID, types=('address', 'bytes32',), function_name='createID')
