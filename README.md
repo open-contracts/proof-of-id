@@ -32,7 +32,7 @@ You can put any amount of data into a hash function, and it will always spit out
 If you are a developer, the first thing you could do is add more countries and identity databases.
 But there's also an interesting way you could provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect a `personalID` that reveals a user's personal info (which we previously just called `ID`) from a separate `accountID` that users tie to their account. They would still only be able to create one of each, but others will not be able to tell which `accountID` belongs to which `personalID`. So users would disclose personal info to create a unique digital identity, but they would not reveal _which_ personal info was used to create _their_ digital identity.
 
-Sounds like magic, but we can make it work using just enclaves and hashes:
+Sounds like magic, but we can make it work using just enclaves and hash functions:
 - 1] when verifying a user's `personalID`, the enclave also generates two random numbers called `accountID` and `secret` and computes `voucher=hash(accountID, secret)`.
 - 2] the enclave tells the user their `accountID` and `secret`, and generates an oracle proof of `personalID` and `voucher`
 - 3] the user publishes the oracle proof containing their `personalID` and `voucher`, that some volunteer with an Ethereum account (who could be incentivzed via [OpenGSN](https://opengsn.org/)) will submit to the contract (so this submission does not reveal the user's Ethereum account).
