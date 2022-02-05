@@ -29,7 +29,7 @@ You can put any amount of data into a hash function, and it will always spit out
 
 ### How to improve
 
-If you are a developer, here's how you could improve the contract to provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect the _personalID_ that reveals a user's personal info (which we previously just called ID) from a separate _accountID_ that they tie to their account. They would still only be able to create one accountID, but others will not be able to tell which accountID belongs to which ID. Here's how the magic works:
+If you are a developer, here's how you could improve the contract to provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect a `personalID` that reveals a user's personal info (which we previously just called `ID`) from a separate `accountID` that users tie to their account. They would still only be able to create one accountID, but others will not be able to tell which `accountID` belongs to which `personalID`. Here's how the magic works:
 - 1] when verifying their _personalID_, the enclave also generates two random numbers called `accountID` and `secret` and computes _voucher=hash(accountID, secret)_.
 - 2] the enclave tells the their `accountID` and `secret`, and generates an oracle proof of _personalID_ and _voucher_
 - 3] the user publishes the oracle proof containing their `personalID` and `voucher`, that some volunteer with an Ethereum account (who could be incentivzed via [OpenGSN](https://opengsn.org/)) will submit to the contract.
