@@ -29,7 +29,8 @@ You can put any amount of data into a hash function, and it will always spit out
 
 ### How to improve
 
-If you are a developer, here's how you could improve the contract to provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect a `personalID` that reveals a user's personal info (which we previously just called `ID`) from a separate `accountID` that users tie to their account. They would still only be able to create one `accountID`, but others will not be able to tell which `accountID` belongs to which `personalID`. So users would disclose personal info to create a unique digital identity, but they would not reveal _which_ personal info was used to create _their_ digital identity.
+If you are a developer, the first thing you could do is add more countries and identity databases.
+But there's also an interesting way you could provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect a `personalID` that reveals a user's personal info (which we previously just called `ID`) from a separate `accountID` that users tie to their account. They would still only be able to create one `accountID`, but others will not be able to tell which `accountID` belongs to which `personalID`. So users would disclose personal info to create a unique digital identity, but they would not reveal _which_ personal info was used to create _their_ digital identity.
 
 Sounds like magic, until you understand how it works:
 - 1] when verifying a user's `personalID`, the enclave also generates two random numbers called `accountID` and `secret` and computes `voucher=hash(accountID, secret)`.
