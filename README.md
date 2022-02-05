@@ -27,6 +27,7 @@ You can put any amount of data into a hash function, and it will always spit out
 
 
 
+
 ### How to improve
 
 If you are a developer, the first thing you could do is add more countries and identity databases.
