@@ -22,7 +22,9 @@ To understand how your ID works and what it does and doesn't reveal about you, I
 
 You can put any amount of data into a hash function, and it will always spit out what looks like a large random number (anywhere between 0 and 2^256). The same data always gives the same number, so it is not _really_ random, but if you change just one bit of the input data, the output changes unpredictably to some new number. This means that the output of a hash function has a special property: you cannot recover its inputs from the output, _except_ by trying out all possibilites until you guess the inputs _exactly_ right. 
 
-Unfortunately, there are not that many possibile inputs for our ID, because there are not that many possible names, birthdays and last 4 SSN digits. So if we just put them all into a hash function and used it's output as ID, it would be easy for others to learn your last SSN digits by trying out all possible inputs and see which produce your ID, especially if they already know your name and birthday. But if we don't include the SSN digits, then IDs might not be unique because some people may share their name and birthday. Instead, we define 32 `ssn_bucket`s, each containing around 300 of the 10.000 possibilities of anyones last 4 SSN digits. You can compute your `ssn_bucket` as follows:
+Unfortunately, there are not that many possibile inputs for our ID, because there are not that many possible names, birthdays and last 4 SSN digits. So if we just put them all into a hash function and used it's output as ID, it would be easy for others to learn your last SSN digits by trying out all possible inputs and see which produce your ID, especially if they already know your name and birthday. But if we don't include the SSN digits, then IDs might not be unique because some people may share their name and birthday. Both would be problematic.
+
+To solve this, we define 32 `ssn_bucket`s, each containing around 300 of the 10.000 possibilities of anyone's last 4 SSN digits. You can compute your `ssn_bucket` as follows:
 ```
 ssn_bucket = hash(last 4 SSN digits) mod 32
 ```
