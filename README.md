@@ -7,7 +7,7 @@ The key difficulty is to compute your ID in a way that is unique to you througho
 
 Currently, the ID is computed in a way that allows anyone to check if it was created by someone with a certain name and birthday (it's not exactly, but _pretty much_ the same as directly revealing those details along with every ID). If they do that, they will also learn something (but not everything!) about the last 4 digits of your SSN: while there were 1000 possibilities for those 4 digits before, they now narrowed it down to around 300 possibilites (which you can [compute here](https://colab.research.google.com/drive/1uEs2eUB8_uG7i_-X1nCds_8wQ_3Ue2JL?usp=sharing)). Right now, this information will be irreversably tied to the past and future transaction history of the Ethereum account that is used to create the ID. 
 
-As we describe below howver, the contract could be improved to provide much better privacy: by publishing your ID _without_ tying it to your Ethereum account right away.
+As we describe below howver, the contract could be improved to provide much better privacy: by keeping secret _which_ personal details belong to a given unique account.
 
 ### The big picture
 
