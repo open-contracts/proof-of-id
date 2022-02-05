@@ -29,12 +29,15 @@ You can put any amount of data into a hash function, and it will always spit out
 
 ### How to improve
 
-If you are a developer, here's how you could improve the contract to provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect a `personalID` that reveals a user's personal info (which we previously just called `ID`) from a separate `accountID` that users tie to their account. They would still only be able to create one `accountID`, but others will not be able to tell which `accountID` belongs to which `personalID`. Here's how the magic works:
-- 1] when verifying their `personalID`, the enclave also generates two random numbers called `accountID` and `secret` and computes `voucher=hash(accountID, secret)`.
+If you are a developer, here's how you could improve the contract to provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect a `personalID` that reveals a user's personal info (which we previously just called `ID`) from a separate `accountID` that users tie to their account. They would still only be able to create one `accountID`, but others will not be able to tell which `accountID` belongs to which `personalID`. So users would disclose personal info to create a unique digital identity, but would not reveal which digital identity belongs to which personal info.
+
+Sounds like magic, until you understand how it works:
+- 1] when verifying a user's `personalID`, the enclave also generates two random numbers called `accountID` and `secret` and computes `voucher=hash(accountID, secret)`.
 - 2] the enclave tells the user their `accountID` and `secret`, and generates an oracle proof of `personalID` and `voucher`
 - 3] the user publishes the oracle proof containing their `personalID` and `voucher`, that some volunteer with an Ethereum account (who could be incentivzed via [OpenGSN](https://opengsn.org/)) will submit to the contract (so this submission does not reveal the user's Ethereum account).
 - 4] if the oracle proof is valid and contains a new `personalID`, the contract appends `voucher` to a `voucherList`, and also updates ('puts it into') a state variable called `voucherUrn=hash(voucher, voucherUrn)`.
 - 5] after a few days, a user could submit the `voucherList` to an enclave along with their `accountID` and `secret`, which computes `voucher` and checks that it is in `voucherList`, then computes the most recent state of the `voucherUrn`, and gives the user an oracle proof for `voucherUrn` and `accountID` that they submit to the contract
 - 6] if the submitted `voucherUrn` has a value that the `voucherUrn` in the contract had before, the user proves that their `accountID` is contained in a `voucher` that was put inside in the `voucherUrn`, without revealing which one. This proves their `accountID` corresponds to a unique `personalID`, without revealing which one.
 
+Optionally, the contract could incentivize 'privacy mining', by optionally allowing users in step 1] to become `privacy miners' by instructing the enclave to replace `personalID` and `voucher` with random numbers, which get submitted to the contract to somewhat obfuscate which `personalID`s may hide personal info.
 
