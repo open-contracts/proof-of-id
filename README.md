@@ -14,24 +14,22 @@ As we describe below howver, the contract could be improved to provide much bett
 ### The contract
 Your unique ID is computed from your personal info as follows:
 ```
-ID = hash(first name,
-          last name,
-          birthday,
-          hash(last 4 SSN digits) mod 32)
+ID = hash(name, birthday, ssn_bucket)
 ```
-where `hash()` refers to [Ethereum's hash function](https://en.wikipedia.org/wiki/SHA-3) and all the inputs are verified by letting users log into their social security website at `https://secure.ssa.gov/RIL/` via an [Open Contracts enclave](https://opencontracts.io/#/protocol). I'll explain the `mod 32` part in a second.
+where `hash()` refers to [Ethereum's hash function](https://en.wikipedia.org/wiki/SHA-3) and all the inputs are verified by letting users log into their social security website at `https://secure.ssa.gov/RIL/` via an [Open Contracts enclave](https://opencontracts.io/#/protocol). I'll explain the `ssn_bucket` part in a second.
 
 To understand how your ID works and what it does and doesn't reveal about you, I'll need to tell you how a [Hash function](https://en.wikipedia.org/wiki/Hash_function) works. Bear with me, it's important and won't be hard! :)
 
-You can put any amount of data into a hash function, and it will always spit out what looks like a large random number (anywhere between 0 and 2^256). The same data always gives the same number, so it is not _really_ random, but if you change just one bit of the input data, the output changes unpredictably to some new number. This means our ID has a unique property: you cannot recover the personal info from the ID, _except_ by trying out all possibilites until you guess the inputs _exactly_ right. 
+You can put any amount of data into a hash function, and it will always spit out what looks like a large random number (anywhere between 0 and 2^256). The same data always gives the same number, so it is not _really_ random, but if you change just one bit of the input data, the output changes unpredictably to some new number. This means that the output of a hash function has a special property: you cannot recover its inputs from the output, _except_ by trying out all possibilites until you guess the inputs _exactly_ right. 
 
-
-
+Unfortunately, there are not that many possibile inputs for our ID, because there are not that many possible names, birthdays and last 4 SSN digits. So if we just put them all into a hash function and used it's output as ID, it would be easy for others to learn your last SSN digits by trying out all possible inputs and see which produce your ID, especially if they already know your name and birthday. But if we don't include the SSN digits, then IDs might not be unique because some people may share their name and birthday. Instead, we define 32 `ssn_bucket`s, each containing around 300 of the 10.000 possibilities of anyones last 4 SSN digits. You can compute your `ssn_bucket` as follows:
+`ssn_bucket = hash(last 4 SSN digits) mod 32`
+where '[mod](https://en.wikipedia.org/wiki/Modulo_operation) 32' shortens the hash into a number between 0 and 31, which we call `ssn_bucket` and include in your ID. Since there are around 300 possibile last 4 SSN digits that fall into the same `ssn_bucket`, an attacker can only learn your name, birthday and bucket, but won't learn much about your SSN digits.
 
 ### How to improve
 
 If you are a developer, the first thing you could do is add more countries and identity databases.
-But there's also an interesting way you could provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect a `personalID` that reveals a user's personal info (which we previously just called `ID`) from a separate `accountID` that users tie to their account. They would still only be able to create one of each, but others will not be able to tell which `accountID` belongs to which `personalID`. So users would disclose personal info to create a unique digital identity, but they would not reveal _which_ personal info was used to create _their_ digital identity.
+But there's also an interesting way you could provide better privacy: using the ideas of [tornado.cash](https://tornado.cash), it is possible to disconnect a `personalID` that reveals a user's personal info (which we previously just called `ID`) from a separate `accountID` that users tie to their account. They would still only be able to create one of each, but others will not be able to tell which `accountID` belongs to which `personalID`. So users would publish some personal info to create a unique digital identity, but they would not reveal _which_ personal info was used to create _their_ digital identity.
 
 Sounds like magic, but we can make it work using just enclaves and hash functions:
 - 1] when verifying a user's `personalID`, the enclave also generates two random numbers called `accountID` and `secret` and computes `voucher=hash(accountID, secret)`.
