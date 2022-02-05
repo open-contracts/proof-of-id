@@ -33,9 +33,9 @@ If you are a developer, here's how you could improve the contract to provide bet
 - 1] when verifying their `personalID`, the enclave also generates two random numbers called `accountID` and `secret` and computes `voucher=hash(accountID, secret)`.
 - 2] the enclave tells the user their `accountID` and `secret`, and generates an oracle proof of `personalID` and `voucher`
 - 3] the user publishes the oracle proof containing their `personalID` and `voucher`, that some volunteer with an Ethereum account (who could be incentivzed via [OpenGSN](https://opengsn.org/)) will submit to the contract.
-- 4] if the oracle proof is valid and contains a new `personalID`, the contract adds a new value to is `hashList`, which is computed as follows: `newHash=hash(voucher, hashList[-1])`, where `hashList[-1]` is the value most recently added to `hashList`
-- 5] after a few days, a user could submit the hashList to the enclave along with their `accountID` and `secret`, which computes `voucher` and verifies that it was at one point to the `hashList`. It then signs an oracle proof containing `accountID` and `hashList[-1]`, which the user submits to the contract via their Ethereum account 
-- 6] the contract verifies that  `hashList[-1]` is contained somewhere in the `hashList`, and connects `accountID` to the users account.
+- 4] if the oracle proof is valid and contains a new `personalID`, the contract appends `voucher` to a `voucherList`, and updates a state variable called `root=hash(voucher, root)`.
+- 5] after a few days, a user could submit the `voucherList` to the enclave along with their `accountID` and `secret`, which computes `voucher` and checks that it is in `voucherList`, then computes `root`, and gives the user an oracle proof containing `root` and `accountID` they submit to the contract via their Ethereum account 
+- 6] if the submitted `root` is equal to one that the contract computed before, it connects `accountID` to the user's account.
 
 
 
