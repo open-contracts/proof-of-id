@@ -33,9 +33,9 @@ If you are a developer, here's how you could improve the contract to provide bet
 - 1] when verifying their `personalID`, the enclave also generates two random numbers called `accountID` and `secret` and computes `voucher=hash(accountID, secret)`.
 - 2] the enclave tells the user their `accountID` and `secret`, and generates an oracle proof of `personalID` and `voucher`
 - 3] the user publishes the oracle proof containing their `personalID` and `voucher`, that some volunteer with an Ethereum account (who could be incentivzed via [OpenGSN](https://opengsn.org/)) will submit to the contract.
-- 4] if the oracle proof is valid and contains a new `personalID`, the contract appends `voucher` to a `voucherList`, and updates a state variable called `root=hash(voucher, root)`.
-- 5] after a few days, a user could submit the `voucherList` to an enclave along with their `accountID` and `secret`, which computes `voucher` and checks that it is in `voucherList`, then computes the most recent `root`, and gives the user an oracle proof for `root` and `accountID` that they submit to the contract
-- 6] if the submitted `root` is equal to one that the contract computed before, it connects `accountID` to the user's account.
+- 4] if the oracle proof is valid and contains a new `personalID`, the contract appends `voucher` to a `voucherList`, and updates a state variable called `urn=hash(voucher, urn)`.
+- 5] after a few days, a user could submit the `voucherList` to an enclave along with their `accountID` and `secret`, which computes `voucher` and checks that it is in `voucherList`, then computes the most recent state of the `urn`, and gives the user an oracle proof for `urn` and `accountID` that they submit to the contract
+- 6] if the submitted `urn` has a value that the `urn` in the contract had before, it connects `accountID` to the user's account.
 
 As long as the user keeps their `secret`, everyone knows that their `accountID` belongs to one unique `personalID` published before they claimed their `accountID`, without knowing which one.
 
