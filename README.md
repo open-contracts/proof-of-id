@@ -37,5 +37,5 @@ If you are a developer, here's how you could improve the contract to provide bet
 - 5] after a few days, a user could submit the `voucherList` to an enclave along with their `accountID` and `secret`, which computes `voucher` and checks that it is in `voucherList`, then computes the most recent `root`, and gives the user an oracle proof for `root` and `accountID` that they submit to the contract
 - 6] if the submitted `root` is equal to one that the contract computed before, it connects `accountID` to the user's account.
 
-
+As long as the user keeps their `secret`, everyone knows that their `accountID` was created from a unique `personalID`, without knowing which.
 
