@@ -37,7 +37,7 @@ Sounds like magic, until you understand how it works:
 - 3] the user publishes the oracle proof containing their `personalID` and `voucher`, that some volunteer with an Ethereum account (who could be incentivzed via [OpenGSN](https://opengsn.org/)) will submit to the contract (so this submission does not reveal the user's Ethereum account).
 - 4] if the oracle proof is valid and contains a new `personalID`, the contract appends `voucher` to a `voucherList`, and also updates ('puts it into') a state variable called `voucherUrn=hash(voucher, voucherUrn)`.
 - 5] after a few days, a user could submit the `voucherList` to an enclave along with their `accountID` and `secret`, which computes their `voucher` and checks that it is in `voucherList`, then computes the most recent state of the `voucherUrn`, and gives the user an oracle proof for `voucherUrn` and `accountID` that they submit to the contract
-- 6] if the submitted `voucherUrn` has a value that the `voucherUrn` in the contract had before, the user proves that their `accountID` is contained in a `voucher` that was put inside in the `voucherUrn`, without revealing which one. This proves their `accountID` corresponds to a unique `personalID`, without revealing which one.
+- 6] if the submitted `voucherUrn` has a value that the `voucherUrn` in the contract had before, the user proves that their `accountID` is contained in a `voucher` that the contract previously put inside its `voucherUrn`, without revealing which one. This proves their `accountID` corresponds to a unique `personalID`, without revealing which one.
 
 
 
