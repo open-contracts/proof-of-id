@@ -17,6 +17,7 @@
 			}
 		],
 		"name": "createID",
+		"oracleFolder": "ssn_oracle",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
