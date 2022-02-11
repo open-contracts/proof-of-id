@@ -7,16 +7,15 @@ with opencontracts.enclave_backend() as enclave:
   
   def parser(mhtml):
     mhtml = email.message_from_string(mhtml.replace("=\n", ""))
-    url = mhtml['Snapshot-Content-Location']
-    target_url = "https://secure.ssa.gov/mySSA/start"
-    assert url == target_url, f"You clicked 'Submit' on '{url}', but should do so on '{target_url}'."
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
-    parsed = BeautifulSoup(html.get_payload(decode=False))
-    name = parsed.find(attrs={'id': '3D"uef-container-tabs0"'}).a.text.strip()
-    ssn_box = parsed.find(attrs={'id': '3D"mySSAOverviewSSN"'})
-    ssn, _, bday, _ = ssn_box.findChild().findChild().findChildren()
-    last4ssn = int(re.findall('[0-9]{4}', ssn.text.strip())[0])
-    bday = bday.text.strip()[14:].strip()
+    url = mhtml['Snapshot-Content-Location']
+    target_url = "https://secure.ssa.gov/myssa/myprofile-ui/main"
+    assert url == target_url, f"You clicked 'Submit' on '{url}', but should do so on '{target_url}'."
+    strings = list(BeautifulSoup(html.get_payload(decode=False)).strings)
+    for key, value in zip(strings[:-1],strings[1:]):
+      if key.startswith("Name:"): name = value.strip()
+      if key.startswith("SSN:"): last4ssn = int(re.findall('[0-9]{4}', value.strip())[0])
+      if key.startswith("Date of Birth:"): bday = value.strip()
     return name, bday, last4ssn
   
   name, bday, last4ssn = enclave.interactive_session(url='https://secure.ssa.gov/RIL/', parser=parser,
