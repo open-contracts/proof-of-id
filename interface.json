@@ -3,6 +3,10 @@
   "address": {
     "ropsten": "0xA520fc19E71edDb52134eD5B146c2f5887CBfB13"
   },
+  "descriptions": {
+    "contract": "This is the contract description",
+    "createID": "This is the description for the createID function"
+  },
   "abi": [
     {
       "inputs": [],
