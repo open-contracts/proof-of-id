@@ -28,6 +28,7 @@ with opencontracts.enclave_backend() as enclave:
   
   # publishing your SSN reveals that last4ssn was one of the following possibilites:
   possibilities = list()
+  enclave.expect_delay(8, "Computing ID...")
   for possibility in range(10000):
     bucket = int(enclave.keccak(possibility, types=("uint256",))[-1]) % 32
     if bucket == ssn_bucket: possibilities.append(str(possibility).zfill(4))
