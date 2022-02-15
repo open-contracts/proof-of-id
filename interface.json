@@ -1,8 +1,13 @@
 {
   "ropsten": {
     "name": "Proof of ID",
-    "address": "0x977c299657a473FEEaE4ed4770e459FA1f4Cc945",
+    "address": "0xA520fc19E71edDb52134eD5B146c2f5887CBfB13",
     "abi": [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
 	{
 		"inputs": [
 			{
@@ -17,15 +22,9 @@
 			}
 		],
 		"name": "createID",
-		"oracleFolder": "ssn_oracle",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
 	},
 	{
 		"inputs": [
