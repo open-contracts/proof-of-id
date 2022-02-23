@@ -1,17 +1,14 @@
 import opencontracts
 from bs4 import BeautifulSoup
-import email, re, os
+import email, os
 
 with opencontracts.enclave_backend() as enclave:
   enclave.print(f'Proof of Identity started running in enclave!')
   
-  def parser(mhtml):
-    mhtml = email.message_from_string(mhtml.replace("=\n", ""))
-    html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
-    url = mhtml['Snapshot-Content-Location']
+  def parser(url, html):
     target_url = "https://secure.ssa.gov/myssa/myprofile-ui/main"
     assert url == target_url, f"You clicked 'Submit' on '{url}', but should do so on '{target_url}'."
-    strings = list(BeautifulSoup(html.get_payload(decode=False)).strings)
+    strings = list(BeautifulSoup(html).strings)
     for key, value in zip(strings[:-1],strings[1:]):
       if key.startswith("Name:"): name = value.strip()
       if key.startswith("SSN:"): last4ssn = int(re.findall('[0-9]{4}', value.strip())[0])
