@@ -1,6 +1,6 @@
 import opencontracts
 from bs4 import BeautifulSoup
-import email, os, re
+import re
 
 with opencontracts.enclave_backend() as enclave:
   enclave.print(f'Proof of Identity started running in enclave!')
