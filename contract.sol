@@ -7,7 +7,7 @@ contract ProofOfID is OpenContract {
     mapping(address => bytes32) private _ID;
 
     constructor() {
-        setOracleHash(this.createID.selector, 0x8de63ff26f5749eea6b7191a181bcc92b7c24c4199942fc454564c0c08579256);
+        setOracleHash(this.createID.selector, 0x23884987967292cf67af3da3b2a1fd5c32d90990b0c99a0305a13443aa43c27d);
     }
 
     function getID(address account) public view returns(bytes32) {
