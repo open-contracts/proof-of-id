@@ -1,7 +1,7 @@
 {
   "name": "Proof of ID",
   "address": {
-    "ropsten": "0xA520fc19E71edDb52134eD5B146c2f5887CBfB13"
+    "ropsten": "0xc5FF42A34be158c39C5F3496c9507C4b90553279"
   },
   "descriptions": {
     "contract": "This is contract allows you to create a unique ID and tie it to your Ethereum account. The ID is computed from identifying information on your social security account website. It may therefore reveal private information about you.",
