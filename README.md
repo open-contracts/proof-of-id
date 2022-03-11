@@ -1,7 +1,6 @@
 # Proof of ID
 
-If you have the [MetaMask Wallet](https://metamask.io/) as browser plugin or mobile app, you can [play around with the contract](https://dapp.opencontracts.io/#/open-contracts/proof-of-id) on Ethereum's Ropsten Testnet! Just make sure your wallet is loaded with some free [Testnet ETH](https://faucet.egorfine.com/). It's also on [Optimistic Ethereum](https://optimism.io)'s Mainnet, which you can add to your Metamask wallet [here](https://chainlist.org/).
-
+If you have the [MetaMask Wallet](https://metamask.io/) as browser plugin or mobile app, you can [interact with the contract](https://dapp.opencontracts.io/#/open-contracts/proof-of-id)! To just play around on Ethereum's Ropsten Testnet, get some free [Testnet ETH](https://faucet.egorfine.com/). It's also live on Ethereum's Layer 2 networks [Optimism](https://gateway.optimism.io) and [Arbitrum](https://bridge.arbitrum.io), which you can add to your Metamask wallet [here](https://chainlist.org/).
 ### Summary
 This contract allows you to create a unqiue identity on the blockchain. For now, this only works for individuals with a US social security number (SSN), but the idea can be generalized to any country and online identity database. The goal is to do this in a way that guarantees a person can only ever create one digital identity, such that they can receive a loan without collateral by proving that they never defaulted on one before, or participate in one-human-one-vote governance decisions on the blockchain.
 
