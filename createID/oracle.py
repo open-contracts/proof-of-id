@@ -21,7 +21,7 @@ with opencontracts.session() as session:
       if key.startswith("Date of Birth:"): bday = value.strip()
     return name, bday, last4ssn
   
-  name, bday, last4ssn = session.interactive_browser('https://secure.ssa.gov/RIL/', parser, instructions)
+  name, bday, last4ssn = session.interactive_browser('https://google.com', parser, instructions)
   
   # we divide all 10000 possible last4ssn into 32 random buckets, by using only the last 5=log2(32) bits
   # so last4ssn isn't revealed even if ssn_bucket can be reverse-engineered from ID
